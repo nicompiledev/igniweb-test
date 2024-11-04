@@ -32,6 +32,16 @@
             <main style="min-height: 100vh; background-image: url('{{ asset('images/library-background.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
                 {{ $slot }}
             </main>
+            <!-- Footer Section -->
+        <footer class="bg-white text-gray-800 text-center py-4 border-top">
+    <p>
+        Developed by
+        <a href="https://www.linkedin.com/in/nicompiledev/"
+           class="text-indigo-600 hover:text-indigo-800"
+           target="_blank">@nicompiledev</a>
+        2024
+    </p>
+</footer>
         </div>
     </body>
 </html>

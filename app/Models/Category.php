@@ -5,16 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Category Model: Represents a book category entity.
+ */
 class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'name', // Nombre de la categoría
+        'name', // Category name
     ];
 
     /**
-     * Obtener los libros que pertenecen a esta categoría.
+     * Retrieves books belonging to this category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function books()
     {

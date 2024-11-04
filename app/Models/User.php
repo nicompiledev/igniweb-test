@@ -7,31 +7,51 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail // Implementar la interfaz
+/**
+ * User Model: Represents an application user.
+ */
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'username', // Asegúrate de que el campo sea 'username' en lugar de 'name'
-        'email',
-        'password',
+        'username', // Unique username
+        'email', // User email
+        'password', // User password
     ];
 
+    /**
+     * Hidden attributes from API responses.
+     *
+     * @var array
+     */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', // Secure password
+        'remember_token', // Secure token
     ];
 
+    /**
+     * Attribute casts.
+     *
+     * @return array
+     */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at' => 'datetime', // Verify email timestamp
+            'password' => 'hashed', // Hashed password
         ];
     }
 
     /**
-     * Obtener las reservas del usuario.
+     * Retrieves user reservations.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reservations()
     {

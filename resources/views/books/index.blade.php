@@ -9,13 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <!-- Contenedor para el mensaje de éxito -->
+                    <!-- Container for success message -->
                     <div id="successMessage" class="hidden p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
                         role="alert">
                         <span class="font-medium">{{ __('Book reserved successfully!') }}</span>
                     </div>
 
-                    <!-- Filtro de categorías y búsqueda -->
+                    <!-- Category filter and search box -->
                     <div class="mb-4 flex items-center">
                         <div class="flex items-center">
                             <label for="category-filter" class="mr-2">{{ __('Filter by Category:') }}</label>
@@ -30,7 +30,7 @@
                             class="border rounded p-2 ml-4">
                     </div>
 
-                    <!-- Tabla de libros -->
+                    <!-- Book table -->
 @if(!$books->isEmpty())
 <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <!-- Modal de Reserva -->
+    <!-- Reservation Modal -->
     <div id="reservationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full"
         x-data="{ open: false }">
         <div class="relative top-20 mx-auto p-5 border w-[600px] max-w-full shadow-lg rounded-md bg-white">
@@ -80,12 +80,12 @@
                 <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4" id="modalTitle"></h3>
                 <p class="text-sm text-gray-500 mb-2" id="modalAuthor"></p>
 
-                <!-- Contenedor para el mensaje de error -->
+                <!-- Container for error message -->
                 <div id="errorMessage" class="hidden p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
                     <span class="font-medium" id="errorMessageText"></span>
                 </div>
 
-                <!-- Contenedor para Descripción y Portada -->
+                <!-- Container for Description and Cover -->
                 <div class="flex mb-4">
                     <div class="flex-1">
                         <p id="modalDescription" class="text-sm text-gray-500 mb-4 overflow-hidden overflow-ellipsis"
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <!-- Contenedor para Fechas y Total de Días -->
+                <!-- Container for Dates and Total Days -->
                 <div class="mb-4 flex space-x-4">
                     <div class="flex-1">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="startDate">
@@ -145,12 +145,12 @@
         document.getElementById('category-filter').addEventListener('change', fetchBooks);
         document.getElementById('search-box').addEventListener('keyup', fetchBooks);
 
-        // Establecer fecha mínima como hoy para las fechas
+        // Set minimum date as today for the dates
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('startDate').min = today;
         document.getElementById('endDate').min = today;
 
-        // Inicializar la paginación
+        // Initialize pagination
         document.getElementById('pagination').addEventListener('click', handlePagination);
     });
 
@@ -202,13 +202,13 @@
                 pageLink.innerText = i;
                 pageLink.href = '#';
                 pageLink.classList.add('pagination-link');
-                pageLink.dataset.page = i; // Almacena el número de página
+                pageLink.dataset.page = i; // Store the page number
                 pageLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    fetchBooks(i); // Llama a fetchBooks con el número de página
+                    fetchBooks(i); // Call fetchBooks with the page number
                 });
 
-                // Marcar la página activa
+                // Mark the active page
                 if (i === data.current_page) {
                     pageLink.classList.add('active');
                 }
@@ -234,12 +234,12 @@
         document.getElementById('errorMessage').classList.add('hidden'); // Reset error message
         document.getElementById('successMessage').classList.add('hidden'); // Reset success message
 
-        // Reiniciar campos de fecha y total de días
+        // Reset date and total days fields
         document.getElementById('startDate').value = '';
         document.getElementById('endDate').value = '';
         document.getElementById('totalDays').innerText = 0;
 
-        // Mostrar el modal
+        // Show the modal
         document.getElementById('reservationModal').classList.remove('hidden');
     }
 
@@ -266,43 +266,43 @@
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
 
-        fetch(`/books/${bookId}/reserve`, { // Cambiar la URL aquí
+        fetch(`/books/${bookId}/reserve`, { // Change the URL here
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
             },
-            body: JSON.stringify({ start_date: startDate, end_date: endDate }), // Aquí solo envías las fechas
+            body: JSON.stringify({ start_date: startDate, end_date: endDate }), // Only send the dates here
         })
         .then(response => {
             if (response.ok) {
                 return response.json().then(data => {
                     closeReservationModal();
-                    document.getElementById('successMessage').classList.remove('hidden'); // Mostrar mensaje de éxito
+                    document.getElementById('successMessage').classList.remove('hidden'); // Show success message
 
-                    // Ocultar mensaje después de 3 segundos
+                    // Hide message after 3 seconds
                     setTimeout(() => {
                         document.getElementById('successMessage').classList.add('hidden');
-                    }, 3000); // 3000 milisegundos = 3 segundos
+                    }, 3000); // 3000 milliseconds = 3 seconds
 
-                    fetchBooks(); // Refrescar la lista de libros
+                    fetchBooks(); // Refresh the book list
                 });
             } else {
                 return response.json().then(error => {
-                    showErrorMessage(error.message); // Mostrar mensaje de error
+                    showErrorMessage(error.message); // Show error message
                 });
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            showErrorMessage('An unexpected error occurred.'); // Mostrar mensaje de error genérico
+            showErrorMessage('An unexpected error occurred.'); // Show generic error message
         });
     }
 
     function showErrorMessage(message) {
         const errorMessageText = document.getElementById('errorMessageText');
-        errorMessageText.innerText = message; // Establecer el texto del mensaje de error
-        document.getElementById('errorMessage').classList.remove('hidden'); // Mostrar el mensaje de error
+        errorMessageText.innerText = message; // Set the error message text
+        document.getElementById('errorMessage').classList.remove('hidden'); // Show the error message
     }
 </script>
 

@@ -7,19 +7,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Reservation Model: Represents a book reservation entity.
+ */
 class Reservation extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'user_id', // Referencia al usuario
-        'book_id', // Referencia al libro
-        'start_date', // Fecha de inicio de la reserva
-        'end_date', // Fecha de finalización de la reserva
+        'user_id', // Foreign key referencing the user
+        'book_id', // Foreign key referencing the book
+        'start_date', // Reservation start date
+        'end_date', // Reservation end date
     ];
 
     /**
-     * Obtener el libro que se ha reservado.
+     * Retrieves the booked book.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function book()
     {
@@ -27,7 +37,9 @@ class Reservation extends Model
     }
 
     /**
-     * Obtener el usuario que ha hecho la reserva.
+     * Retrieves the user who made the reservation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {

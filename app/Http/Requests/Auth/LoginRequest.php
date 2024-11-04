@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
+
+
 class LoginRequest extends FormRequest
 {
     /**
@@ -27,7 +29,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string'], // Cambiar 'email' a 'username' para aceptar ambos
+            'username' => ['required', 'string'], // Change 'email' to 'username' to accept both
             'password' => ['required', 'string'],
         ];
     }
@@ -41,10 +43,10 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        // Lógica para autenticación con email o username
+        // Logic for authentication with email or username
         $credentials = $this->only('username', 'password');
 
-        // Verifica si el campo ingresado es un email
+        // Check if the entered field is an email
         if (filter_var($credentials['username'], FILTER_VALIDATE_EMAIL)) {
             $credentials = [
                 'email' => $credentials['username'],
@@ -57,7 +59,7 @@ class LoginRequest extends FormRequest
             ];
         }
 
-        // Intentar autenticar con las credenciales actualizadas
+        // Attempt to authenticate with the updated credentials
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 

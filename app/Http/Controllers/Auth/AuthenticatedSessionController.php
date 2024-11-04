@@ -8,6 +8,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+/**
+ * AuthenticatedSessionController class
+ *
+ * This class handles the authentication session for the application.
+ */
 
 class AuthenticatedSessionController extends Controller
 {

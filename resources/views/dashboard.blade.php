@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <!-- Imagen de perfil -->
+                    <!-- Profile Image -->
                     <div class="flex items-center mb-4">
                         <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default-user.png') }}"
                             alt="Profile Image" class="h-16 w-16 rounded-full object-cover mr-4" />
@@ -73,7 +73,7 @@
         let currentReservationId = null;
 
         function openModal(reservationId) {
-            currentReservationId = reservationId; // Guardamos el ID de la reserva
+            currentReservationId = reservationId; // Save the reservation ID
             document.getElementById('confirmation-modal').classList.remove('hidden');
         }
 
@@ -92,7 +92,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Eliminar la fila de la tabla
+                        // Remove the table row
                         document.getElementById(`reservation-${currentReservationId}`).remove();
                         closeModal();
                     } else {
