@@ -4,5 +4,10 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
+<!-- components/application-logo.blade.php -->
+<div {{ $attributes->merge(['class' => 'flex items-center justify-center rounded-full shadow-md']) }}>
+    <i class="fa-solid fa-book-open-reader"></i>
+</div>
 
-<i class="fa-solid big-icon fa-book-open-reader"></i>
+
+

@@ -18,7 +18,9 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100" style="min-height: 100vh; background-image: url('{{ asset('images/library-background.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-application-logo class="border-4 border-white text-gray-800 text-6xl p-1 hover:shadow-lg hover:scale-105 transition duration-300" />
+
+
                 </a>
             </div>
 

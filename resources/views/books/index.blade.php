@@ -150,10 +150,15 @@
                         {{ __('Cancel') }}
                     </button>
                     <button id="confirmButton"
-                        class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md sm:w-24"
-                        onclick="confirmReservation()">
-                        {{ __('Confirm') }}
-                    </button>
+    class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md sm:w-24 opacity-50 cursor-not-allowed"
+    onclick="confirmReservation()"
+    disabled
+    title="Both dates must be selected to continue">
+    {{ __('Confirm') }}
+</button>
+
+
+
                 </div>
             </div>
         </div>
@@ -281,16 +286,40 @@
         }
 
         function calculateTotalDays() {
-            const startDate = new Date(document.getElementById('startDate').value);
-            const endDate = new Date(document.getElementById('endDate').value);
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const confirmButton = document.getElementById('confirmButton');
 
-            if (startDate && endDate && startDate <= endDate) {
-                const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-                document.getElementById('totalDays').innerText = totalDays;
-            } else {
-                document.getElementById('totalDays').innerText = 0;
-            }
+    // Verifica si ambas fechas están seleccionadas y son válidas
+    if (startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start <= end) {
+            const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+            document.getElementById('totalDays').innerText = totalDays;
+
+            // Habilita el botón de confirmación y cambia su apariencia
+            confirmButton.disabled = false;
+            confirmButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            confirmButton.classList.add('opacity-100', 'cursor-pointer', 'bg-blue-600', 'hover:bg-blue-700');
+            confirmButton.removeAttribute('title'); // Elimina el tooltip
+        } else {
+            resetConfirmButton(confirmButton);
         }
+    } else {
+        resetConfirmButton(confirmButton);
+    }
+}
+
+function resetConfirmButton(button) {
+    button.disabled = true;
+    button.classList.remove('opacity-100', 'cursor-pointer', 'bg-blue-600', 'hover:bg-blue-700');
+    button.classList.add('opacity-50', 'cursor-not-allowed');
+    button.setAttribute('title', 'Both must be selected to continue'); // Agrega el tooltip
+}
+
+
 
         function confirmReservation() {
             const bookId = document.getElementById('bookId').value;
