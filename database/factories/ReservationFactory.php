@@ -16,10 +16,11 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Genera un usuario ficticio
-            'book_id' => Book::factory(), // Genera un libro ficticio
-            'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'), // Fecha de inicio ficticia
-            'end_date' => $this->faker->dateTimeBetween('now', '+1 month'), // Fecha de fin ficticia
+            'user_id' => User::factory(), // Generates a fake user
+            'book_id' => Book::factory(), // Generates a fake book
+            'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'), // Fake start date
+            'end_date' => $this->faker->dateTimeBetween('now', '+1 month'), // Fake end date
         ];
     }
 }
+
