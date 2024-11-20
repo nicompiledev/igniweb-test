@@ -4,14 +4,3 @@
 
 
 
-.big-icon {
-    font-size: 48px;
-    color: #032B44;
-    /* Azul oscuro */
-    text-shadow: 0 0 3px #FFFFFF;
-    /* Sombra blanca alrededor del texto */
-    border: 3px solid #FFFFFF;
-    /* Borde blanco alrededor del icono */
-    border-radius: 50%;
-    /* Redondea esquinas para iconos circulares */
-}

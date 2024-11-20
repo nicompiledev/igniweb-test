@@ -1,8 +1,8 @@
 <x-guest-layout>
-    <!-- Estado de la sesión -->
+    <!-- Session status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <!-- Texto de bienvenida mejorado -->
+    <!-- Improved welcome text -->
     <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">
         Welcome Back to the Book Reservation App!
     </h2>
@@ -11,25 +11,25 @@
         Log in to get started!
     </p>
 
-    <!-- Formulario de inicio de sesión -->
+    <!-- Login form -->
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Campo de Usuario o Correo -->
+        <!-- Username or Email field -->
         <div>
             <x-input-label for="username" :value="__('Username or Email')" />
             <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
-        <!-- Campo de Contraseña -->
+        <!-- Password field -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
             <input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Script para mostrar/ocultar la contraseña -->
+        <!-- Script to show/hide password -->
         <script>
             function togglePasswordVisibility() {
                 var passwordInput = document.getElementById("password");
@@ -41,7 +41,7 @@
             }
         </script>
 
-        <!-- Opciones adicionales: Recordar contraseña y mostrar contraseña -->
+        <!-- Additional options: Remember me and Show Password -->
         <div class="block mt-4 flex justify-between items-center">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <!-- Enlace de registro -->
+        <!-- Registration link -->
         <div class="mt-4 text-center">
             <p class="text-sm text-gray-600">
                 {{ __("Don't have an account yet?") }}
@@ -64,7 +64,7 @@
             </p>
         </div>
 
-        <!-- Botón de inicio de sesión y enlace de recuperación de contraseña -->
+        <!-- Login button and password recovery link -->
         <div class="flex items-center justify-end mt-6">
             @if (Route::has('password.request'))
                 <a class="underline text-indigo-600 hover:text-indigo-900 me-4" href="{{ route('password.request') }}">

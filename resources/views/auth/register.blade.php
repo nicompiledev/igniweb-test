@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-<!-- Texto de bienvenida mejorado -->
+<!-- Improved welcome text -->
     <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">
         Welcome to the Book Reservation App!
     </h2>
@@ -69,6 +69,7 @@
     </form>
 
     <script>
+        // Function to toggle password visibility
         function togglePasswordVisibility(fieldId) {
             var passwordInput = document.getElementById(fieldId);
             if (passwordInput.type === "password") {
