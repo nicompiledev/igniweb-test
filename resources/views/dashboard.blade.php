@@ -27,23 +27,23 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Title') }}</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Author') }}</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Category') }}</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Start Date') }}</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('End Date') }}</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Actions') }}</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 250px;">{{ __('Title') }}</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 180px;">{{ __('Author') }}</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 140px;">{{ __('Category') }}</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Start Date') }}</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('End Date') }}</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 100px;">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($reservations as $reservation)
-                                        <tr id="reservation-{{ $reservation->id }}">
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $reservation->book->title ?? 'No Title' }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $reservation->book->author ?? 'Unknown Author' }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $reservation->book->category ?? 'Unknown Category' }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $reservation->start_date ? \Carbon\Carbon::parse($reservation->start_date)->format('Y-m-d') : 'N/A' }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $reservation->end_date ? \Carbon\Carbon::parse($reservation->end_date)->format('Y-m-d') : 'N/A' }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
+                                        <tr id="reservation-{{ $reservation->id }}" class="min-h-[48px]">
+                                            <td class="px-4 py-2 whitespace-normal">{{ $reservation->book->title ?? 'No Title' }}</td>
+                                            <td class="px-4 py-2 whitespace-normal">{{ $reservation->book->author ?? 'Unknown Author' }}</td>
+                                            <td class="px-4 py-2 whitespace-normal">{{ $reservation->book->category ?? 'Unknown Category' }}</td>
+                                            <td class="px-4 py-2 whitespace-normal">{{ $reservation->start_date ? \Carbon\Carbon::parse($reservation->start_date)->format('Y-m-d') : 'N/A' }}</td>
+                                            <td class="px-4 py-2 whitespace-normal">{{ $reservation->end_date ? \Carbon\Carbon::parse($reservation->end_date)->format('Y-m-d') : 'N/A' }}</td>
+                                            <td class="px-4 py-2 whitespace-normal">
                                                 <button type="button" class="text-red-600 hover:text-red-900" onclick="openModal({{ $reservation->id }})">
                                                     {{ __('Delete') }}
                                                 </button>

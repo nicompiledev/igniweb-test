@@ -33,34 +33,42 @@
 
                     <!-- Book table with responsive design -->
                     @if(!$books->isEmpty())
+                    <!-- Book table with responsive design -->
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __('Title') }}</th>
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[300px]">
+                                        {{ __('Title') }}
+                                    </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __('Author') }}</th>
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[200px]">
+                                        {{ __('Author') }}
+                                    </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __('Category') }}</th>
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[150px]">
+                                        {{ __('Category') }}
+                                    </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __('Actions') }}</th>
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">
+                                        {{ __('Actions') }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($books as $book)
                                 <tr>
-                                    <td class="px-4 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">{{
-                                        $book->title }}</td>
-                                    <td class="px-4 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">{{
-                                        $book->author }}</td>
-                                    <td class="px-4 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">{{
-                                        $book->category ?? 'Unknown' }}</td>
-                                    <td class="px-4 py-4 whitespace-nowrap">
+                                    <td class="px-4 py-4 text-sm">
+                                        <div class="line-clamp-2">{{ $book->title }}</div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm">
+                                        <div class="line-clamp-2">{{ $book->author }}</div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm">
+                                        <div class="line-clamp-2">{{ $book->category ?? 'Unknown' }}</div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button type="button" class="text-blue-600 hover:text-blue-900"
                                             onclick="openReservationModal('{{ $book->id }}', '{{ $book->title }}', '{{ $book->author }}', '{{ $book->description }}', '{{ $book->cover_book_url }}')">
                                             {{ __('Reserve') }}
@@ -166,11 +174,11 @@
         });
 
         function fetchBooks(page = 1, category = '', search = '') {
-            if(!category) {
+            if (!category) {
                 category = document.getElementById('category-filter').value;
             }
 
-            if(!search) {
+            if (!search) {
                 search = document.getElementById('search-box').value;
             }
 
@@ -190,47 +198,53 @@
             books.forEach(book => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap min-w-[200px] max-w-[300px] overflow-hidden overflow-ellipsis">${book.title}</td>
-                <td class="px-6 py-4 whitespace-nowrap min-w-[150px] max-w-[250px] overflow-hidden overflow-ellipsis">${book.author}</td>
-                <td class="px-6 py-4 whitespace-nowrap min-w-[150px] max-w-[250px] overflow-hidden overflow-ellipsis">${book.category || 'Unknown'}</td>
-                <td class="px-6 py-4 whitespace-nowrap min-w-[100px] max-w-[150px]">
-                    <button type="button" class="text-blue-600 hover:text-blue-900"
-                        onclick="openReservationModal('${book.id}', '${book.title}', '${book.author}', '${book.description}', '${book.cover_book_url}')">
-                        Reserve
-                    </button>
-                </td>
-            `;
+            <td class="px-4 py-4 text-sm">
+                <div class="line-clamp-2">${book.title}</div>
+            </td>
+            <td class="px-4 py-4 text-sm">
+                <div class="line-clamp-2">${book.author}</div>
+            </td>
+            <td class="px-4 py-4 text-sm">
+                <div class="line-clamp-2">${book.category || 'Unknown'}</div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <button type="button" class="text-blue-600 hover:text-blue-900"
+                    onclick="openReservationModal('${book.id}', '${book.title}', '${book.author}', '${book.description}', '${book.cover_book_url}')">
+                    Reserve
+                </button>
+            </td>
+        `;
                 tbody.appendChild(row);
             });
 
             if (books.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center">${__('No books available at the moment.')}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4">No books available at the moment.</td></tr>`;
             }
         }
 
-function updatePagination(data) {
-    const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = data.links.map(link => {
-        if (link.url === null) {
+        function updatePagination(data) {
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = data.links.map(link => {
+                if (link.url === null) {
 
-            return `<span class="px-2 py-1 text-gray-500 cursor-default">${link.label}</span>`;
-        }
-        const activeClass = link.active
-            ? 'bg-blue-500 text-white cursor-default'
-            : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white';
-        return `<a href="#" data-page="${link.url.split('page=')[1]}"
+                    return `<span class="px-2 py-1 text-gray-500 cursor-default">${link.label}</span>`;
+                }
+                const activeClass = link.active
+                    ? 'bg-blue-500 text-white cursor-default'
+                    : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white';
+                return `<a href="#" data-page="${link.url.split('page=')[1]}"
                    class="px-2 py-1 rounded ${activeClass}">${link.label}</a>`;
-    }).join('');
+            }).join('');
 
 
-    document.querySelectorAll('#pagination a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const page = e.target.getAttribute('data-page');
-            fetchBooks(page);
-        });
-    });
-}
+            document.querySelectorAll('#pagination a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = e.target.getAttribute('data-page');
+                    fetchBooks(page);
+                });
+            });
+        }
 
 
 
@@ -305,7 +319,7 @@ function updatePagination(data) {
                             fetchBooks(); // Refresh the book list
                         });
 
-    // Paginación} else {
+                        // Paginación} else {
                         return response.json().then(error => {
                             showErrorMessage(error.message); // Show error message
                         });
