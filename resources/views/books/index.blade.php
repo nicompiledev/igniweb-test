@@ -16,17 +16,19 @@
                     </div>
 
                     <!-- Category filter and search box - Now responsive -->
-                    <div class="mb-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center">
-                        <div class="flex items-center w-full sm:w-auto">
-                            <label for="category-filter" class="mr-2 whitespace-nowrap">{{ __('Filter by Category:')
-                                }}</label>
-                            <select id="category-filter" class="border rounded p-2 w-full sm:w-auto">
+                    <div class="mb-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                        <div class="flex flex-col sm:flex-row w-full sm:w-auto items-center space-y-2 sm:space-y-0">
+                            <label for="category-filter"
+                                class="mr-0 sm:mr-2 whitespace-nowrap text-center sm:text-left w-full sm:w-auto">{{
+                                __('Filter by Category:') }}</label>
+                            <select id="category-filter" class="border rounded p-2 w-full sm:w-auto truncate">
                                 <option value="all">{{ __('All') }}</option>
                                 @foreach ($categories as $category)
                                 <option value="{{ strtolower($category) }}">{{ ucfirst($category) }}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <input type="text" id="search-box" placeholder="{{ __('Search for books...') }}"
                             class="border rounded p-2 w-full sm:w-auto">
                     </div>
@@ -150,12 +152,10 @@
                         {{ __('Cancel') }}
                     </button>
                     <button id="confirmButton"
-    class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md sm:w-24 opacity-50 cursor-not-allowed"
-    onclick="confirmReservation()"
-    disabled
-    title="Both dates must be selected to continue">
-    {{ __('Confirm') }}
-</button>
+                        class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md sm:w-24 opacity-50 cursor-not-allowed"
+                        onclick="confirmReservation()" disabled title="Both dates must be selected to continue">
+                        {{ __('Confirm') }}
+                    </button>
 
 
 
@@ -286,38 +286,38 @@
         }
 
         function calculateTotalDays() {
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    const confirmButton = document.getElementById('confirmButton');
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const confirmButton = document.getElementById('confirmButton');
 
-    // Verifica si ambas fechas están seleccionadas y son válidas
-    if (startDate && endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
+            // Check if both dates are selected and valid
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
 
-        if (start <= end) {
-            const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
-            document.getElementById('totalDays').innerText = totalDays;
+                if (start <= end) {
+                    const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                    document.getElementById('totalDays').innerText = totalDays;
 
-            // Habilita el botón de confirmación y cambia su apariencia
-            confirmButton.disabled = false;
-            confirmButton.classList.remove('opacity-50', 'cursor-not-allowed');
-            confirmButton.classList.add('opacity-100', 'cursor-pointer', 'bg-blue-600', 'hover:bg-blue-700');
-            confirmButton.removeAttribute('title'); // Elimina el tooltip
-        } else {
-            resetConfirmButton(confirmButton);
+                    // Enable the confirm button and change its appearance
+                    confirmButton.disabled = false;
+                    confirmButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                    confirmButton.classList.add('opacity-100', 'cursor-pointer', 'bg-blue-600', 'hover:bg-blue-700');
+                    confirmButton.removeAttribute('title'); // Remove the tooltip
+                } else {
+                    resetConfirmButton(confirmButton);
+                }
+            } else {
+                resetConfirmButton(confirmButton);
+            }
         }
-    } else {
-        resetConfirmButton(confirmButton);
-    }
-}
 
-function resetConfirmButton(button) {
-    button.disabled = true;
-    button.classList.remove('opacity-100', 'cursor-pointer', 'bg-blue-600', 'hover:bg-blue-700');
-    button.classList.add('opacity-50', 'cursor-not-allowed');
-    button.setAttribute('title', 'Both must be selected to continue'); // Agrega el tooltip
-}
+        function resetConfirmButton(button) {
+            button.disabled = true;
+            button.classList.remove('opacity-100', 'cursor-pointer', 'bg-blue-600', 'hover:bg-blue-700');
+            button.classList.add('opacity-50', 'cursor-not-allowed');
+            button.setAttribute('title', 'Both must be selected to continue'); // Add the tooltip
+        }
 
 
 
@@ -348,7 +348,7 @@ function resetConfirmButton(button) {
                             fetchBooks(); // Refresh the book list
                         });
 
-                        // Paginación} else {
+                    } else {
                         return response.json().then(error => {
                             showErrorMessage(error.message); // Show error message
                         });
@@ -366,5 +366,17 @@ function resetConfirmButton(button) {
             document.getElementById('errorMessage').classList.remove('hidden'); // Show the error message
         }
     </script>
+
+    <style>
+        @media (max-width: 640px) {
+            #category-filter {
+                max-width: 100%;
+            }
+            label[for="category-filter"] {
+                text-align: center;
+            }
+        }
+    </style>
+
 
 </x-app-layout>

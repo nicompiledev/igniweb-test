@@ -143,4 +143,66 @@ class ReservationTest extends TestCase
             'book_id' => $book->id,
         ]);
     }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_deletes_reservations_when_user_is_deleted()
+    {
+        // Create a user and a book
+        $user = User::factory()->create();
+        $book = Book::factory()->create();
+
+        // Create a reservation associated with the user and book
+        $reservation = Reservation::create([
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+            'start_date' => now(),
+            'end_date' => now()->addDays(7),
+        ]);
+
+        // Verify that the reservation has been created
+        $this->assertDatabaseHas('reservations', [
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+        ]);
+
+        // Delete the user
+        $user->delete();
+
+        // Verify that the reservation has been deleted as well
+        $this->assertDatabaseMissing('reservations', [
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+        ]);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_deletes_reservations_when_book_is_deleted()
+    {
+        // Create a user and a book
+        $user = User::factory()->create();
+        $book = Book::factory()->create();
+
+        // Create a reservation associated with the user and book
+        $reservation = Reservation::create([
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+            'start_date' => now(),
+            'end_date' => now()->addDays(7),
+        ]);
+
+        // Verify that the reservation has been created
+        $this->assertDatabaseHas('reservations', [
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+        ]);
+
+        // Delete the book
+        $book->delete();
+
+        // Verify that the reservation has been deleted as well
+        $this->assertDatabaseMissing('reservations', [
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+        ]);
+    }
 }
